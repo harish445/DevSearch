@@ -32,3 +32,5 @@ def project(request, pk):
         if i['id'] == pk:
             projectObj = i
     return render(request, 'projects/single-project.html', {'project':projectObj})
+
+sdkfjbs
