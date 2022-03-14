@@ -4,8 +4,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile
+from django.urls import conf
+from django.db.models import Q
+from .models import Profile, Skill
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .utils import searchProfiles
+
 
 # Create your views here.
 
@@ -62,8 +66,9 @@ def registerUser(request):
     return render(request, 'users/login_register.html', context)
 
 def profiles(request):
-    profiles = Profile.objects.all()
-    context = {'profiles': profiles}
+    profiles, search_query = searchProfiles(request)
+    
+    context = {'profiles': profiles, 'search_query': search_query}
     return render(request, 'users/profiles.html', context)
 
 def userProfile(request, pk):
@@ -111,6 +116,7 @@ def createSkill(request):
             skill = form.save(commit=False)
             skill.owner = profile
             skill.save()
+            messages.error(request, "Skill was added successfully!")
             return redirect('account')
     
     context = {'form': form}
@@ -127,12 +133,23 @@ def updateSkill(request, pk):
         form = SkillForm(request.POST, instance=skill)
         if form.is_valid():
             form.save()
+            messages.success(request, "Skill was updated successfully!")
             return redirect('account')
     
     context = {'form': form}
     return render(request, 'users/skill_form.html', context)
 
-
+def deleteSkill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+    
+    if request.method == 'POST':
+        skill.delete()
+        messages.error(request, "Skill was deleted successfully!")
+        return redirect('account')
+    
+    context = {'object': skill}
+    return render(request, 'delete_template.html', context)
 
 
 
