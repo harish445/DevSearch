@@ -18,7 +18,7 @@ let buildProjects = (projects) => {
         //console.log(project)
 
         let projectCard = `
-            <div class="projeect--card">
+            <div class="project--card">
                 <img src="http://127.0.0.1:8000${project.featured_image}" />
                 
                 <div>
@@ -43,7 +43,7 @@ let buildProjects = (projects) => {
 let addVoteEvents = () => {
     let voteBtns = document.getElementsByClassName('vote--option')
 
-    for (let i=0; voteBtns.length > i; i++) {
+        for (let i=0; voteBtns.length > i; i++) {
 
         voteBtns[i].addEventListener('click', (e) => {
             let token = localStorage.getItem('token')
