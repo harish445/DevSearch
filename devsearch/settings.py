@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-%x)m)50^(zz7p)lp0=!8bs7=j4r*dvl2j_&xse5%j=2ndg!#bq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['devsearch-devs.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -217,6 +217,5 @@ AWS_STORAGE_BUCKET_NAME = 'bucket-devsearch'
 
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
-#AWS_S3_REGION_NAME = "ap-south-1"
-#AWS_S3_SIGNATURE_VERSION = "s3v4"
-#os.environ.get(
+if os.getcwd() == '/app':
+    DEBUG = False
