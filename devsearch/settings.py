@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'corsheaders',
+    'storages',
 ]
 
 REST_FRAMEWORK = {
@@ -89,6 +90,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     
     'django.middleware.security.SecurityMiddleware',
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -125,10 +129,21 @@ WSGI_APPLICATION = 'devsearch.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'devsearch',
+        'USER': 'harish',
+        'PASSWORD': 'anjali445',
+        'HOST': 'database-1.cdrqc5kw8owp.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -172,6 +187,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'testfit777@gmail.com'
 EMAIL_HOST_PASSWORD = 'hfnouytaznygeots'
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -189,3 +205,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIAYBIDF3XVJRP6DKUU'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'bucket-devsearch'
+
+#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+#AWS_S3_REGION_NAME = "ap-south-1"
+#AWS_S3_SIGNATURE_VERSION = "s3v4"
+#os.environ.get(
